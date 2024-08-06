@@ -1,0 +1,109 @@
+﻿<Window x:Class="courseworkwarehouse.Forms.FormEditSupplier"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:courseworkwarehouse.Forms"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Language="ru-RU"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="18"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen"
+        Title="Добавление\изменение данных поставщика"
+        Icon="/Images/Logo.png"
+        ResizeMode="NoResize">
+
+    <Grid Width="1000"
+          Height="850">
+        <StackPanel Width="1000"
+                    Height="650"
+                    Orientation="Vertical"
+                    Margin="0,100,0,100">
+            <DockPanel Margin="0,70,0,0">
+                <Label Content="Название"
+                       Margin="150,10,0,10"
+                       FontSize="18" />
+                <TextBox x:Name="tbTitleSupplier"
+                         materialDesign:TextFieldAssist.UnderlineBrush="#FF39B747"
+                         SelectionBrush="#FF005800"
+                         CaretBrush="DarkGreen"
+                         TextWrapping="Wrap"
+                         HorizontalAlignment="Right"
+                         Margin="10,10,100,10"
+                         Width="500"
+                         Height="30"
+                         FontSize="18" />
+            </DockPanel>
+            <DockPanel>
+                <Label Content="Адрес"
+                       Margin="150,10,0,10"
+                       FontSize="18" />
+                <TextBox x:Name="tbAddress"
+                         materialDesign:TextFieldAssist.UnderlineBrush="#FF39B747"
+                         SelectionBrush="#FF005800"
+                         CaretBrush="DarkGreen"
+                         TextWrapping="Wrap"
+                         HorizontalAlignment="Right"
+                         Margin="10,10,100,10"
+                         Width="500"
+                         Height="30"
+                         FontSize="18" />
+            </DockPanel>
+            <DockPanel>
+                <Label Content="Номер телефона"
+                       Margin="150,10,0,10"
+                       FontSize="18" />
+                <TextBox x:Name="tbPhoneSupplier"
+                         materialDesign:TextFieldAssist.UnderlineBrush="#FF39B747"
+                         SelectionBrush="#FF005800"
+                         CaretBrush="DarkGreen"
+                         TextWrapping="Wrap"
+                         HorizontalAlignment="Right"
+                         Margin="10,10,100,10"
+                         Width="500"
+                         Height="30"
+                         MaxLength="11"
+                         FontSize="18"
+                         Cursor="Arrow" />
+            </DockPanel>
+            <DockPanel>
+                <Label Content="Описание"
+                       Margin="150,90,0,10"
+                       FontSize="18" />
+                <TextBox x:Name="tbDescription"
+                         materialDesign:TextFieldAssist.UnderlineBrush="#FF39B747"
+                         SelectionBrush="#FF005800"
+                         CaretBrush="DarkGreen"
+                         TextWrapping="Wrap"
+                         HorizontalAlignment="Right"
+                         VerticalAlignment="Top"
+                         Margin="10,10,100,0"
+                         Width="500"
+                         Height="180"
+                         MaxLength="250"
+                         FontSize="18" />
+            </DockPanel>
+            <Button x:Name="btnSave"
+                    Content="Сохранить"
+                    Width="850"
+                    Margin="0, 100, 0 ,20"
+                    Click="btnSave_Click"
+                    Background="#FF39B747"
+                    BorderBrush="#FF39B747"
+                    FontSize="18" />
+            <Button x:Name="btnBackSupplier"
+                    Content="Назад"
+                    Width="850"
+                    Background="#FF676767"
+                    Click="btnBackSupplier_Click"
+                    FontSize="18" />
+        </StackPanel>
+    </Grid>
+</Window>

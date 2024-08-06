@@ -1,0 +1,951 @@
+﻿
+    <Window x:Class="courseworkwarehouse.Forms.FormManager"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:courseworkwarehouse.Forms"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Language="ru-RU"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="18"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="Менеджер по продажам"
+        WindowState="Maximized"
+        SizeToContent="WidthAndHeight"
+        Closing="Window_Closing"
+        Icon="/Images/Logo.png">
+    <Grid Width="1920"
+          Height="1010">
+        <materialDesign:Card>
+            <TabControl Style="{StaticResource MaterialDesignNavigationRailTabControl}"
+                        TabStripPlacement="Left"
+                        Name="TabCon">
+                <TabItem x:Name="tiReport"
+                         Width="100"
+                         Margin="0,10,0,10">
+                    <TabItem.Header>
+                        <StackPanel x:Name="tiInvoice"
+                                    Width="auto"
+                                    Height="auto"
+                                    Loaded="tiInvoice_Loaded">
+                            <materialDesign:PackIcon Width="30"
+                                                     Height="30"
+                                                     HorizontalAlignment="Center"
+                                                     Kind="ApproximatelyEqualBox"
+                                                     Foreground="#005800" />
+                            <TextBlock HorizontalAlignment="Center"
+                                       Text="Расходная&#xA;накладная"
+                                       Foreground="#005800" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid>
+                        <materialDesign:ColorZone Mode="PrimaryMid"
+                                                  Background="#005800"
+                                                  Padding="16"
+                                                  materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                                  materialDesign:ShadowAssist.ShadowEdges="Top">
+                            <DockPanel>
+                                <StackPanel Orientation="Horizontal"
+                                            materialDesign:RippleAssist.IsCentered="True">
+                                    <materialDesign:ColorZone Mode="Standard"
+                                                              Padding="8 4 8 4"
+                                                              CornerRadius="2"
+                                                              Panel.ZIndex="1"
+                                                              Margin="16 5 0 0"
+                                                              materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                                                              Width="400">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition Height="0*" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Button Style="{StaticResource MaterialDesignToolButton}"
+                                                    Cursor="Arrow"
+                                                    IsEnabled="False"
+                                                    Opacity="0.7">
+                                                <materialDesign:PackIcon Kind="Search" />
+                                            </Button>
+                                            <TextBox Name="tbSearchReport"
+                                                     FontSize="18"
+                                                     Grid.Column="1"
+                                                     Margin="8,0,0,0"
+                                                     materialDesign:HintAssist.Hint="Поиск"
+                                                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                     BorderThickness="0"
+                                                     MinWidth="200"
+                                                     VerticalAlignment="Center"
+                                                     SelectionBrush="#FF70A981"
+                                                     CaretBrush="DarkGreen"
+                                                     Cursor="Arrow"
+                                                     TextChanged="tbSearchReport_TextChanged" />
+                                        </Grid>
+                                    </materialDesign:ColorZone>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal"
+                                            materialDesign:RippleAssist.IsCentered="True"
+                                            HorizontalAlignment="Right">
+                                    <Button x:Name="btnClear"
+                                            Style="{StaticResource MaterialDesignFlatSecondaryMidBgButton}"
+                                            Content="Очистить корзину"
+                                            FontSize="20"
+                                            VerticalAlignment="Top"
+                                            HorizontalAlignment="Right"
+                                            Width="210"
+                                            Height="50"
+                                            Margin="0,0,20,0"
+                                            Background="Red"
+                                            Foreground="White"
+                                            BorderBrush="Red"
+                                            Click="btnClear_Click" />
+                                    <Button x:Name="btnPrint"
+                                            Style="{StaticResource MaterialDesignFlatSecondaryMidBgButton}"
+                                            Content="Напечатать"
+                                            FontSize="20"
+                                            VerticalAlignment="Top"
+                                            HorizontalAlignment="Right"
+                                            Width="200"
+                                            Height="50"
+                                            Margin="0,0,20,0"
+                                            Background="#FF39B747"
+                                            Foreground="White"
+                                            BorderBrush="#FF39B747"
+                                            Click="btnPrint_Click"
+                                            Cursor="Hand" />
+                                    <Button x:Name="btnExitReport"
+                                            ToolTip="Сменить пользователя"
+                                            ToolBar.OverflowMode="Always"
+                                            Background="#FF39B747"
+                                            BorderBrush="#FF39B747"
+                                            Foreground="White"
+                                            Height="50"
+                                            Width="50"
+                                            Cursor="Hand"
+                                            Click="btnExitReport_Click">
+                                        <materialDesign:PackIcon Width="25"
+                                                                 Height="25"
+                                                                 HorizontalAlignment="Center"
+                                                                 Kind="ExitToApp"
+                                                                 Foreground="White" />
+                                    </Button>
+
+                                </StackPanel>
+                            </DockPanel>
+                        </materialDesign:ColorZone>
+                        <StackPanel VerticalAlignment="Bottom">
+                            <DataGrid x:Name="dgReportProducts"
+                                      FontSize="18"
+                                      VerticalAlignment="Bottom"
+                                      HorizontalAlignment="Center"
+                                      Width="1820"
+                                      Height="464"
+                                      IsReadOnly="True"
+                                      CanUserAddRows="False"
+                                      CanUserDeleteRows="False"
+                                      CanUserResizeColumns="False"
+                                      AutoGenerateColumns="False"
+                                      CanUserSortColumns="False"
+                                      CanUserReorderColumns="False">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Товары"
+                                                        Foreground="#005800" />
+                                    <DataGridTemplateColumn Header="+1">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Name="btnAddReportProduct1"
+                                                        Style="{StaticResource MaterialDesignFloatingActionSecondaryButton}"
+                                                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                                        Background="#FF39B747"
+                                                        BorderBrush="#FF39B747"
+                                                        Foreground="White"
+                                                        ToolTip="+1"
+                                                        Click="btnAddReportProduct1_Click">
+                                                    <materialDesign:PackIcon Kind="Plus"
+                                                                             Width="30"
+                                                                             Height="30"
+                                                                             Foreground="White" />
+                                                </Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Header="+10">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Name="btnAddReportProduct10"
+                                                        Style="{StaticResource MaterialDesignFloatingActionSecondaryButton}"
+                                                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                                        Background="#FF39B747"
+                                                        BorderBrush="#FF39B747"
+                                                        Foreground="White"
+                                                        ToolTip="+10"
+                                                        Click="btnAddReportProduct10_Click">
+                                                    <materialDesign:PackIcon Kind="Plus"
+                                                                             Width="30"
+                                                                             Height="30"
+                                                                             Foreground="White" />
+                                                </Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Header="+100">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Name="btnAddReportProduct100"
+                                                        Style="{StaticResource MaterialDesignFloatingActionSecondaryButton}"
+                                                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                                        Background="#FF39B747"
+                                                        BorderBrush="#FF39B747"
+                                                        Foreground="White"
+                                                        ToolTip="+100"
+                                                        Click="btnAddReportProduct100_Click">
+                                                    <materialDesign:PackIcon Kind="Plus"
+                                                                             Width="30"
+                                                                             Height="30"
+                                                                             Foreground="White" />
+                                                </Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Header="Картинка"
+                                                            Width="SizeToCells"
+                                                            IsReadOnly="True">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Image Width="150"
+                                                       Height="150">
+                                                    <Image.Source>
+                                                        <Binding Path="Фото">
+                                                            <Binding.TargetNullValue>
+                                                                <ImageSource>\Images\picture.png</ImageSource>
+                                                            </Binding.TargetNullValue>
+                                                        </Binding>
+                                                    </Image.Source>
+                                                </Image>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTextColumn Header="Артикул товара"
+                                                        Binding="{Binding [Артикул товара]}" />
+                                    <DataGridTextColumn Header="Название"
+                                                        Binding="{Binding [Название]}" />
+                                    <DataGridTextColumn Header="Цена (руб.)"
+                                                        Binding="{Binding [Цена]}" />
+                                    <DataGridTextColumn Header="Количество"
+                                                        Binding="{Binding [Количество]}" />
+                                </DataGrid.Columns>
+
+                            </DataGrid>
+                            <DataGrid x:Name="dgReportKorzina"
+                                      FontSize="18"
+                                      AutoGenerateColumns="False"
+                                      VerticalAlignment="Bottom"
+                                      HorizontalAlignment="Center"
+                                      Width="1820"
+                                      Height="464"
+                                      IsReadOnly="True"
+                                      CanUserAddRows="False"
+                                      CanUserDeleteRows="False"
+                                      CanUserResizeColumns="False"
+                                      CanUserReorderColumns="False"
+                                      CanUserSortColumns="False">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Корзина"
+                                                        Foreground="#005800" />
+                                    <DataGridTemplateColumn Header="-1">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Name="btnDeleteReportProduct1"
+                                                        Style="{StaticResource MaterialDesignFloatingActionSecondaryButton}"
+                                                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                                        Background="red"
+                                                        BorderBrush="red"
+                                                        Foreground="White"
+                                                        ToolTip="-1"
+                                                        Click="btnDeleteReportProduct1_Click">
+                                                    <materialDesign:PackIcon Kind="Minus"
+                                                                             Width="30"
+                                                                             Height="30"
+                                                                             Foreground="White" />
+                                                </Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Header="-10">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Name="btnDeleteReportProduct10"
+                                                        Style="{StaticResource MaterialDesignFloatingActionSecondaryButton}"
+                                                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                                        Background="red"
+                                                        BorderBrush="red"
+                                                        Foreground="White"
+                                                        ToolTip="-10"
+                                                        Click="btnDeleteReportProduct10_Click">
+                                                    <materialDesign:PackIcon Kind="Minus"
+                                                                             Width="30"
+                                                                             Height="30"
+                                                                             Foreground="White" />
+                                                </Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Header="-100">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Name="btnDeleteReportProduct100"
+                                                        Style="{StaticResource MaterialDesignFloatingActionSecondaryButton}"
+                                                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                                        Background="red"
+                                                        BorderBrush="red"
+                                                        Foreground="White"
+                                                        ToolTip="-100"
+                                                        Click="btnDeleteReportProduct100_Click">
+                                                    <materialDesign:PackIcon Kind="Minus"
+                                                                             Width="30"
+                                                                             Height="30"
+                                                                             Foreground="White" />
+                                                </Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Header="Картинка"
+                                                            Width="SizeToCells"
+                                                            IsReadOnly="True">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Image Width="150"
+                                                       Height="150">
+                                                    <Image.Source>
+                                                        <Binding Path="Фото">
+                                                            <Binding.TargetNullValue>
+                                                                <ImageSource>\Images\picture.png</ImageSource>
+                                                            </Binding.TargetNullValue>
+                                                        </Binding>
+                                                    </Image.Source>
+                                                </Image>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTextColumn Header="Артикул товара"
+                                                        Binding="{Binding [Артикул товара]}" />
+                                    <DataGridTextColumn Header="Название"
+                                                        Binding="{Binding [Название]}" />
+                                    <DataGridTextColumn Header="Цена (руб.)"
+                                                        Binding="{Binding [Цена]}" />
+                                    <DataGridTextColumn Header="Количество"
+                                                        Binding="{Binding [Количество]}" />
+                                    <DataGridTemplateColumn Header="Удалить товар">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Name="btnDeleteReportRow"
+                                                        Style="{StaticResource MaterialDesignFloatingActionSecondaryButton}"
+                                                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                                        Background="red"
+                                                        BorderBrush="red"
+                                                        Foreground="White"
+                                                        ToolTip="Удалить товар"
+                                                        Click="btnDeleteReportRow_Click">
+                                                    <materialDesign:PackIcon Kind="TrashCan"
+                                                                             Width="30"
+                                                                             Height="30"
+                                                                             Foreground="White" />
+                                                </Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+
+                <TabItem x:Name="tiProduct"
+                         Width="100"
+                         Margin="0,10,0,10"
+                         Loaded="tiProduct_Loaded">
+                    <TabItem.Header>
+                        <StackPanel Width="auto"
+                                    Height="auto">
+                            <materialDesign:PackIcon Width="24"
+                                                     Height="24"
+                                                     HorizontalAlignment="Center"
+                                                     Kind="PencilPlusOutline"
+                                                     Foreground="#005800" />
+                            <TextBlock HorizontalAlignment="Center"
+                                       Text="Товары"
+                                       Foreground="#005800" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <materialDesign:ColorZone Mode="PrimaryMid"
+                                                  Background="#005800"
+                                                  Padding="16"
+                                                  materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                                  materialDesign:ShadowAssist.ShadowEdges="Top">
+                            <DockPanel>
+                                <StackPanel Orientation="Horizontal"
+                                            materialDesign:RippleAssist.IsCentered="True">
+                                    <ComboBox FontSize="18"
+                                              x:Name="cbProductGroup"
+                                              SelectedIndex="0"
+                                              Margin="8 0 0 0"
+                                              BorderThickness="0"
+                                              materialDesign:ColorZoneAssist.Mode="Standard"
+                                              materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource MaterialDesignPaper}"
+                                              BorderBrush="{DynamicResource MaterialDesignPaper}"
+                                              SelectionChanged="cbProductGroup_SelectionChanged">
+                                        <ComboBoxItem Content="Все товары" />
+                                    </ComboBox>
+                                    <materialDesign:ColorZone Mode="Standard"
+                                                              Padding="8 4 8 4"
+                                                              CornerRadius="2"
+                                                              Panel.ZIndex="1"
+                                                              Margin="16 5 0 0"
+                                                              materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                                                              Width="400">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition Height="0*" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Button Style="{StaticResource MaterialDesignToolButton}"
+                                                    Cursor="Arrow"
+                                                    IsEnabled="False"
+                                                    Opacity="0.7">
+                                                <materialDesign:PackIcon Kind="Search" />
+                                            </Button>
+                                            <TextBox Name="tbSearchProduct"
+                                                     FontSize="18"
+                                                     Grid.Column="1"
+                                                     Margin="8,0,0,0"
+                                                     materialDesign:HintAssist.Hint="Поиск"
+                                                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                     BorderThickness="0"
+                                                     MinWidth="200"
+                                                     VerticalAlignment="Center"
+                                                     SelectionBrush="#FF70A981"
+                                                     CaretBrush="DarkGreen"
+                                                     Cursor="Arrow"
+                                                     TextChanged="tbSearchProduct_TextChanged" />
+                                        </Grid>
+                                    </materialDesign:ColorZone>
+
+                                    <RadioButton x:Name="rbWithoutProduct"
+                                                 Style="{StaticResource MaterialDesignChoiceChipRadioButton}"
+                                                 Margin="20,0,10,0"
+                                                 GroupName="GroupChoiceChip"
+                                                 Content="Без сортировки (₽)"
+                                                 Background="LightSkyBlue"
+                                                 Foreground="White"
+                                                 FontSize="18"
+                                                 Cursor="Hand"
+                                                 Checked="rbWithoutProduct_Checked" />
+                                    <RadioButton x:Name="rbAscProduct"
+                                                 Style="{StaticResource MaterialDesignChoiceChipRadioButton}"
+                                                 Margin="10,0,10,0"
+                                                 GroupName="GroupChoiceChip"
+                                                 Content="По возрастанию (₽)"
+                                                 Background="LightSkyBlue"
+                                                 Foreground="White"
+                                                 FontSize="18"
+                                                 Checked="rbAscProduct_Checked" />
+                                    <RadioButton x:Name="rbDescProduct"
+                                                 Style="{StaticResource MaterialDesignChoiceChipRadioButton}"
+                                                 Margin="10,0,10,0"
+                                                 GroupName="GroupChoiceChip"
+                                                 Content="По убыванию (₽)"
+                                                 Background="LightSkyBlue"
+                                                 Foreground="White"
+                                                 FontSize="18"
+                                                 Checked="rbDescProduct_Checked" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal"
+                                            materialDesign:RippleAssist.IsCentered="True"
+                                            HorizontalAlignment="Right">
+                                    <Button x:Name="btnAddProduct"
+                                            Style="{StaticResource MaterialDesignFlatSecondaryMidBgButton}"
+                                            Content="Добавить"
+                                            FontSize="20"
+                                            VerticalAlignment="Top"
+                                            HorizontalAlignment="Right"
+                                            Width="200"
+                                            Height="50"
+                                            Margin="0,0,20,0"
+                                            Background="#FF39B747"
+                                            Foreground="White"
+                                            BorderBrush="#FF39B747"
+                                            Click="btnAddProduct_Click" />
+                                    <Button x:Name="btnDeleteProduct"
+                                            Style="{StaticResource MaterialDesignFlatSecondaryMidBgButton}"
+                                            Content="Удалить"
+                                            FontSize="20"
+                                            VerticalAlignment="Top"
+                                            HorizontalAlignment="Right"
+                                            Margin="0,0,20,0"
+                                            Width="200"
+                                            Height="50"
+                                            Background="#FF39B747"
+                                            Foreground="White"
+                                            BorderBrush="#FF39B747"
+                                            Click="btnDeleteProduct_Click" />
+                                    <Button x:Name="btnExitProduc"
+                                            ToolTip="Сменить пользователя"
+                                            ToolBar.OverflowMode="Always"
+                                            Background="#FF39B747"
+                                            BorderBrush="#FF39B747"
+                                            Foreground="White"
+                                            Height="50"
+                                            Width="50"
+                                            Cursor="Hand"
+                                            Click="btnExitProduc_Click">
+                                        <materialDesign:PackIcon Width="25"
+                                                                 Height="25"
+                                                                 HorizontalAlignment="Center"
+                                                                 Kind="ExitToApp"
+                                                                 Foreground="White" />
+                                    </Button>
+
+                                </StackPanel>
+                            </DockPanel>
+                        </materialDesign:ColorZone>
+
+
+                        <DataGrid x:Name="dgProduct"
+                                  VerticalAlignment="Top"
+                                  HorizontalAlignment="Center"
+                                  Width="1820"
+                                  Height="928"
+                                  IsReadOnly="True"
+                                  CanUserAddRows="False"
+                                  CanUserDeleteRows="False"
+                                  CanUserResizeColumns="False"
+                                  Margin="0,82,0,0"
+                                  AutoGenerateColumns="False"
+                                  CanUserReorderColumns="False"
+                                  CanUserSortColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button x:Name="btnEditProduct"
+                                                    Style="{StaticResource MaterialDesignFlatSecondaryMidBgButton}"
+                                                    Content="Редактировать"
+                                                    FontSize="14"
+                                                    Background="#FF39B747"
+                                                    Foreground="White"
+                                                    BorderBrush="#FF39B747"
+                                                    Click="btnEditProduct_Click" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Картинка"
+                                                        Width="SizeToCells"
+                                                        IsReadOnly="True">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Image Width="150"
+                                                   Height="150">
+                                                <Image.Source>
+                                                    <Binding Path="Photo">
+                                                        <Binding.TargetNullValue>
+                                                            <ImageSource>\Images\picture.png</ImageSource>
+                                                        </Binding.TargetNullValue>
+                                                    </Binding>
+                                                </Image.Source>
+                                            </Image>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="Артикул товара"
+                                                    Binding="{Binding [Артикул товара]}" />
+                                <DataGridTextColumn Header="Название"
+                                                    Binding="{Binding [Название]}" />
+                                <DataGridTextColumn Header="Цена (₽)"
+                                                    Binding="{Binding [Цена]}" />
+                                <DataGridTextColumn Header="Количество"
+                                                    Binding="{Binding [Количество]}" />
+                                <DataGridTextColumn Header="Поставщик"
+                                                    Binding="{Binding [Поставщик]}" />
+                                <DataGridTextColumn Header="Товарная группа"
+                                                    Binding="{Binding [Товарная группа]}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </TabItem>
+
+                <TabItem x:Name="tiProductGroup"
+                         Width="100"
+                         Margin="0,10,0,10"
+                         Loaded="tiProductGroup_Loaded">
+                    <TabItem.Header>
+                        <StackPanel Width="auto"
+                                    Height="auto">
+                            <materialDesign:PackIcon Width="24"
+                                                     Height="24"
+                                                     HorizontalAlignment="Center"
+                                                     Kind="AttachmentPlus"
+                                                     Foreground="#005800" />
+                            <TextBlock HorizontalAlignment="Center"
+                                       Text="Товарная&#xA;  группа"
+                                       Foreground="#005800" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid>
+                        <materialDesign:ColorZone Mode="PrimaryMid"
+                                                  Background="#005800"
+                                                  Padding="16"
+                                                  materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                                  materialDesign:ShadowAssist.ShadowEdges="Top">
+                            <DockPanel>
+                                <StackPanel Orientation="Horizontal"
+                                            materialDesign:RippleAssist.IsCentered="True">
+                                    <materialDesign:ColorZone Mode="Standard"
+                                                              Padding="8 4 8 4"
+                                                              CornerRadius="2"
+                                                              Panel.ZIndex="1"
+                                                              Margin="16 5 0 0"
+                                                              materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                                                              Width="400">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition Height="0*" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Button Style="{StaticResource MaterialDesignToolButton}"
+                                                    Cursor="Arrow"
+                                                    IsEnabled="False"
+                                                    Opacity="0.7">
+                                                <materialDesign:PackIcon Kind="Search" />
+                                            </Button>
+                                            <TextBox Name="tbSearchProductGroup"
+                                                     FontSize="18"
+                                                     Grid.Column="1"
+                                                     Margin="8,0,0,0"
+                                                     materialDesign:HintAssist.Hint="Поиск"
+                                                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                     BorderThickness="0"
+                                                     MinWidth="200"
+                                                     VerticalAlignment="Center"
+                                                     SelectionBrush="#FF70A981"
+                                                     CaretBrush="DarkGreen"
+                                                     Cursor="Arrow"
+                                                     TextChanged="tbSearchProductGroup_TextChanged" />
+                                        </Grid>
+                                    </materialDesign:ColorZone>
+
+                                    <RadioButton x:Name="rbWithoutProductGroup"
+                                                 Style="{StaticResource MaterialDesignChoiceChipRadioButton}"
+                                                 Margin="20,0,10,0"
+                                                 GroupName="GroupChoiceChip"
+                                                 Content="Без сортировки"
+                                                 Background="LightSkyBlue"
+                                                 Foreground="White"
+                                                 FontSize="18"
+                                                 Cursor="Hand"
+                                                 Checked="rbWithoutProductGroup_Checked" />
+                                    <RadioButton x:Name="rbAscProductGroup"
+                                                 Style="{StaticResource MaterialDesignChoiceChipRadioButton}"
+                                                 Margin="10,0,10,0"
+                                                 GroupName="GroupChoiceChip"
+                                                 Content="По возрастанию"
+                                                 Background="LightSkyBlue"
+                                                 Foreground="White"
+                                                 FontSize="18"
+                                                 Checked="rbAscProductGroup_Checked" />
+                                    <RadioButton x:Name="rbDescProductGroup"
+                                                 Style="{StaticResource MaterialDesignChoiceChipRadioButton}"
+                                                 Margin="10,0,10,0"
+                                                 GroupName="GroupChoiceChip"
+                                                 Content="По убыванию"
+                                                 Background="LightSkyBlue"
+                                                 Foreground="White"
+                                                 FontSize="18"
+                                                 Checked="rbDescProductGroup_Checked" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal"
+                                            materialDesign:RippleAssist.IsCentered="True"
+                                            HorizontalAlignment="Right">
+                                    <Button x:Name="btnAddProductGroup"
+                                            Style="{StaticResource MaterialDesignFlatSecondaryMidBgButton}"
+                                            Content="Добавить"
+                                            FontSize="20"
+                                            VerticalAlignment="Top"
+                                            HorizontalAlignment="Right"
+                                            Width="200"
+                                            Height="50"
+                                            Margin="0,0,20,0"
+                                            Background="#FF39B747"
+                                            Foreground="White"
+                                            BorderBrush="#FF39B747"
+                                            Click="btnAddProduct_ClickGroup" />
+                                    <Button x:Name="btnDeleteProductGroup"
+                                            Style="{StaticResource MaterialDesignFlatSecondaryMidBgButton}"
+                                            Content="Удалить"
+                                            FontSize="20"
+                                            VerticalAlignment="Top"
+                                            HorizontalAlignment="Right"
+                                            Margin="0,0,20,0"
+                                            Width="200"
+                                            Height="50"
+                                            Background="#FF39B747"
+                                            Foreground="White"
+                                            BorderBrush="#FF39B747"
+                                            Click="btnDeleteProductGroup_Click" />
+                                    <Button x:Name="btnExitProductGroup"
+                                            ToolTip="Сменить пользователя"
+                                            ToolBar.OverflowMode="Always"
+                                            Background="#FF39B747"
+                                            BorderBrush="#FF39B747"
+                                            Foreground="White"
+                                            Height="50"
+                                            Width="50"
+                                            Cursor="Hand"
+                                            Click="btnExitProductGroup_Click">
+                                        <materialDesign:PackIcon Width="25"
+                                                                 Height="25"
+                                                                 HorizontalAlignment="Center"
+                                                                 Kind="ExitToApp"
+                                                                 Foreground="White" />
+                                    </Button>
+
+                                </StackPanel>
+                            </DockPanel>
+                        </materialDesign:ColorZone>
+
+
+                        <DataGrid x:Name="dgProductGroup"
+                                  VerticalAlignment="Bottom"
+                                  HorizontalAlignment="Center"
+                                  Width="1820"
+                                  Height="928"
+                                  IsReadOnly="True"
+                                  CanUserAddRows="False"
+                                  CanUserDeleteRows="False"
+                                  CanUserResizeColumns="False"
+                                  CanUserReorderColumns="False"
+                                  CanUserSortColumns="False"
+                                  FontSize="22">
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button x:Name="btnEditProduct"
+                                                    Style="{StaticResource MaterialDesignFlatSecondaryMidBgButton}"
+                                                    Content="Редактировать"
+                                                    FontSize="14"
+                                                    Background="#FF39B747"
+                                                    Foreground="White"
+                                                    BorderBrush="#FF39B747"
+                                                    Click="btnEditProductGroup_Click" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </TabItem>
+
+
+                <TabItem x:Name="tiSupplier"
+                         Width="100"
+                         Margin="0,10,0,10"
+                         Loaded="tiSupplier_Loaded">
+                    <TabItem.Header>
+                        <StackPanel Width="auto"
+                                    Height="auto">
+                            <materialDesign:PackIcon Width="30"
+                                                     Height="30"
+                                                     HorizontalAlignment="Center"
+                                                     Kind="AccountGroup"
+                                                     Foreground="#005800" />
+                            <TextBlock HorizontalAlignment="Center"
+                                       Text="Поставщики"
+                                       Foreground="#005800" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid>
+                        <materialDesign:ColorZone Mode="PrimaryMid"
+                                                  Background="#005800"
+                                                  Padding="16"
+                                                  materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                                  materialDesign:ShadowAssist.ShadowEdges="Top">
+                            <DockPanel>
+                                <StackPanel Orientation="Horizontal"
+                                            materialDesign:RippleAssist.IsCentered="True">
+                                    <materialDesign:ColorZone Mode="Standard"
+                                                              Padding="8 4 8 4"
+                                                              CornerRadius="2"
+                                                              Panel.ZIndex="1"
+                                                              Margin="16 5 0 0"
+                                                              materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                                                              Width="400">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition Height="0*" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Button Style="{StaticResource MaterialDesignToolButton}"
+                                                    Cursor="Arrow"
+                                                    IsEnabled="False"
+                                                    Opacity="0.7">
+                                            </Button>
+                                            <TextBox Name="tbSearchSupplier"
+                                                     FontSize="18"
+                                                     Grid.Column="1"
+                                                     Margin="8,0,0,0"
+                                                     materialDesign:HintAssist.Hint="Поиск"
+                                                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                     BorderThickness="0"
+                                                     MinWidth="200"
+                                                     VerticalAlignment="Center"
+                                                     SelectionBrush="#FF70A981"
+                                                     CaretBrush="DarkGreen"
+                                                     Cursor="Arrow"
+                                                     TextChanged="tbSearchSupplier_TextChanged" />
+                                        </Grid>
+                                    </materialDesign:ColorZone>
+
+                                    <RadioButton x:Name="rbWithoutSupplier"
+                                                 Style="{StaticResource MaterialDesignChoiceChipRadioButton}"
+                                                 Margin="20,0,10,0"
+                                                 GroupName="GroupChoiceChip"
+                                                 Content="Без сортировки"
+                                                 Background="LightSkyBlue"
+                                                 Foreground="White"
+                                                 FontSize="18"
+                                                 Cursor="Hand"
+                                                 Checked="rbWithoutSupplier_Checked" />
+                                    <RadioButton x:Name="rbAscSupplier"
+                                                 Style="{StaticResource MaterialDesignChoiceChipRadioButton}"
+                                                 Margin="10,0,10,0"
+                                                 GroupName="GroupChoiceChip"
+                                                 Content="По возрастанию"
+                                                 Background="LightSkyBlue"
+                                                 Foreground="White"
+                                                 FontSize="18"
+                                                 Checked="rbAscSupplier_Checked" />
+                                    <RadioButton x:Name="rbDescSupplier"
+                                                 Style="{StaticResource MaterialDesignChoiceChipRadioButton}"
+                                                 Margin="10,0,10,0"
+                                                 GroupName="GroupChoiceChip"
+                                                 Content="По убыванию"
+                                                 Background="LightSkyBlue"
+                                                 Foreground="White"
+                                                 FontSize="18"
+                                                 Cursor="Hand"
+                                                 Checked="rbDescSupplier_Checked" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal"
+                                            materialDesign:RippleAssist.IsCentered="True"
+                                            HorizontalAlignment="Right">
+                                    <Button x:Name="btnAddSupplier"
+                                            Style="{StaticResource MaterialDesignFlatSecondaryMidBgButton}"
+                                            Content="Добавить"
+                                            FontSize="20"
+                                            VerticalAlignment="Top"
+                                            HorizontalAlignment="Right"
+                                            Width="200"
+                                            Height="50"
+                                            Margin="0,0,20,0"
+                                            Background="#FF39B747"
+                                            Foreground="White"
+                                            BorderBrush="#FF39B747"
+                                            Cursor="Hand"
+                                            Click="btnAddSupplier_Click" />
+                                    <Button x:Name="btnDeleteSupplier"
+                                            Style="{StaticResource MaterialDesignFlatSecondaryMidBgButton}"
+                                            Content="Удалить"
+                                            FontSize="20"
+                                            VerticalAlignment="Top"
+                                            HorizontalAlignment="Right"
+                                            Margin="0,0,20,0"
+                                            Width="200"
+                                            Height="50"
+                                            Background="#FF39B747"
+                                            Foreground="White"
+                                            BorderBrush="#FF39B747"
+                                            Cursor="Hand"
+                                            Click="btnDeleteSupplier_Click" />
+                                    <Button x:Name="btnExitSupplier"
+                                            ToolTip="Сменить пользователя"
+                                            ToolBar.OverflowMode="Always"
+                                            Background="#FF39B747"
+                                            BorderBrush="#FF39B747"
+                                            Foreground="White"
+                                            Height="50"
+                                            Width="50"
+                                            Cursor="Hand"
+                                            Click="btnExitSupplier_Click">
+                                        <materialDesign:PackIcon Width="25"
+                                                                 Height="25"
+                                                                 HorizontalAlignment="Center"
+                                                                 Kind="ExitToApp"
+                                                                 Foreground="White" />
+                                    </Button>
+                                </StackPanel>
+                            </DockPanel>
+                        </materialDesign:ColorZone>
+
+                        <DataGrid x:Name="dgSupplier"
+                                  VerticalAlignment="Bottom"
+                                  HorizontalAlignment="Center"
+                                  Width="1820"
+                                  Height="928"
+                                  IsReadOnly="True"
+                                  CanUserAddRows="False"
+                                  CanUserDeleteRows="False"
+                                  CanUserResizeColumns="False"
+                                  CanUserReorderColumns="False"
+                                  CanUserSortColumns="False"
+                                  FontSize="18">
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button x:Name="EditSupplier"
+                                                    Style="{StaticResource MaterialDesignFlatSecondaryMidBgButton}"
+                                                    Content="Редактировать"
+                                                    FontSize="14"
+                                                    Background="#FF39B747"
+                                                    Foreground="White"
+                                                    BorderBrush="#FF39B747"
+                                                    Click="EditSupplier_Click" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </materialDesign:Card>
+    </Grid>
+</Window>

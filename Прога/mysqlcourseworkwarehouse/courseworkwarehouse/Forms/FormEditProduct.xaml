@@ -1,0 +1,169 @@
+﻿<Window x:Class="courseworkwarehouse.Forms.FormEditProduct"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:courseworkwarehouse.Forms"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Language="ru-RU"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="18"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="Добавление\изменение данных товара"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Icon="/Images/Logo.png">
+    <Grid Width="1000"
+          Height="850">
+        <StackPanel Width="1000"
+                    Height="750"
+                    Orientation="Vertical">
+            <DockPanel Margin="0,50,0,0">
+                <Label Content="Название"
+                       Margin="150,10,0,10"
+                       FontSize="18" />
+                <TextBox x:Name="tbTitleProduct"
+                         materialDesign:TextFieldAssist.UnderlineBrush="#FF39B747"
+                         SelectionBrush="#FF005800"
+                         CaretBrush="DarkGreen"
+                         TextWrapping="Wrap"
+                         HorizontalAlignment="Right"
+                         Margin="10,10,100,10"
+                         Width="500"
+                         Height="30"
+                         FontSize="18"
+                         Cursor="Arrow" />
+            </DockPanel>
+            <DockPanel>
+                <Label Content="Цена"
+                       Margin="150,10,0,10"
+                       FontSize="18" />
+                <TextBox x:Name="tbCostProduct"
+                         materialDesign:TextFieldAssist.UnderlineBrush="#FF39B747"
+                         SelectionBrush="#FF005800"
+                         CaretBrush="DarkGreen"
+                         TextWrapping="Wrap"
+                         HorizontalAlignment="Right"
+                         Margin="10,10,100,10"
+                         Width="500"
+                         Height="30"
+                         FontSize="18"
+                         PreviewTextInput="tbCostProduct_PreviewTextInput" />
+            </DockPanel>
+            <DockPanel>
+                <Label Content="Количество"
+                       Margin="150,10,0,10"
+                       FontSize="18" />
+                <TextBox x:Name="tbQuantityProduct"
+                         materialDesign:TextFieldAssist.UnderlineBrush="#FF39B747"
+                         SelectionBrush="#FF005800"
+                         CaretBrush="DarkGreen"
+                         TextWrapping="Wrap"
+                         HorizontalAlignment="Right"
+                         Margin="10,10,100,10"
+                         Width="500"
+                         Height="30"
+                         FontSize="18" />
+            </DockPanel>
+            <DockPanel>
+                <Label Content="Поставщик"
+                       Margin="150,10,0,10"
+                       FontSize="18" />
+                <ComboBox x:Name="cbSuppliers"
+                          VerticalAlignment="Bottom"
+                          materialDesign:TextFieldAssist.UnderlineBrush="#FF39B747"
+                          HorizontalAlignment="Right"
+                          Margin="10,10,100,10"
+                          Width="500"
+                          Height="30"
+                          FontSize="18" />
+            </DockPanel>
+            <DockPanel>
+                <Label Content="Товарная группа"
+                       Margin="150,10,0,10"
+                       FontSize="18" />
+                <ComboBox x:Name="cbProductGroups"
+                          VerticalAlignment="Bottom"
+                          materialDesign:TextFieldAssist.UnderlineBrush="#FF39B747"
+                          HorizontalAlignment="Right"
+                          Margin="10,10,100,10"
+                          Width="500"
+                          Height="30"
+                          FontSize="18" />
+            </DockPanel>
+            <DockPanel>
+                <Label Content="Фото"
+                       Margin="150,80,0,0"
+                       FontSize="18" />
+                <Border BorderBrush="#FF005800"
+                        BorderThickness="1"
+                        HorizontalAlignment="Left"
+                        Width="170"
+                        Margin="20,10,0,10"
+                        Height="170">
+                    <Image x:Name="imagePhoto"
+                           Height="170"
+                           Width="170"
+                           Stretch="Uniform" />
+                </Border>
+
+                <TextBox x:Name="tbPhoto"
+                         materialDesign:TextFieldAssist.UnderlineBrush="#FF39B747"
+                         SelectionBrush="#FF005800"
+                         CaretBrush="DarkGreen"
+                         IsEnabled="False"
+                         TextWrapping="Wrap"
+                         HorizontalAlignment="Right"
+                         VerticalAlignment="Top"
+                         Margin="10,10,0,0"
+                         Width="500"
+                         Height="180"
+                         FontSize="18"
+                         Cursor="Arrow" />
+                <Button Style="{StaticResource MaterialDesignFloatingActionSecondaryButton}"
+                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                        Background="Red"
+                        BorderBrush="Red"
+                        Click="Button_Click">
+                    <materialDesign:PackIcon Kind="DeleteForever"
+                                             Width="30"
+                                             Height="30"
+                                             Foreground="White" />
+                </Button>
+            </DockPanel>
+            <Button x:Name="btnSelectPhoto"
+                    Content="Выбрать фото"
+                    Width="850"
+                    Margin="0, 80, 0 ,20"
+                    Click="btnSelectPhoto_Click"
+                    Background="#FF39B747"
+                    BorderBrush="#FF39B747"
+                    FontSize="18" />
+            <Button x:Name="btnSaveProduct"
+                    Content="Сохранить"
+                    Width="850"
+                    Margin="0, 0, 0 ,20"
+                    Click="btnSaveProduct_Click"
+                    BorderBrush="#FF39B747"
+                    Background="#FF39B747"
+                    FontSize="18" />
+            <Button x:Name="btnBackProduct"
+                    Content="Назад"
+                    Width="850"
+                    Background="#FF676767"
+                    Click="btnBackProduct_Click"
+                    FontSize="18" />
+        </StackPanel>
+        <StackPanel VerticalAlignment="Bottom">
+            
+            
+        </StackPanel>
+    </Grid>
+
+</Window>
